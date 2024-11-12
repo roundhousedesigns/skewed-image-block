@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "rhd/skewed-image-block",
+  "version": "0.1.0",
+  "title": "Skewed Image Block",
+  "category": "media",
+  "icon": "smiley",
+  "description": "A block that displays an image with skewed edges.",
+  "example": {},
+  "supports": {
+    "html": false,
+    "align": [
+      "full"
+    ]
+  },
+  "attributes": {
+    "imageUrl": {
+      "type": "string"
+    },
+    "imageAlt": {
+      "type": "string",
+      "default": ""
+    },
+    "parallax": {
+      "type": "boolean",
+      "default": false
+    },
+    "angle": {
+      "type": "number",
+      "default": -10
+    },
+    "align": {
+      "type": "string",
+      "default": "full"
+    }
+  },
+  "textdomain": "skewed-image-block",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScript": "file:./view.js"
+}

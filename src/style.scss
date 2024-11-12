@@ -1,0 +1,58 @@
+.wp-block-rhd-skewed-image-block {
+	position: relative;
+	width: 100vw;
+	margin-left: calc(50% - 50vw);
+	margin-right: calc(50% - 50vw);
+
+	&.alignfull {
+		margin-block-start: 0;
+		margin-block-end: 0;
+	}
+
+	// Create two pseudo-elements for top and bottom text wrapping
+	&::before,
+	&::after {
+		content: "";
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		pointer-events: none;
+	}
+
+	&::before {
+		float: left;
+		shape-outside: polygon(0 0%, 100% 10%, 100% 0%, 0 0%);
+	}
+
+	&::after {
+		float: right;
+		shape-outside: polygon(100% 100%, 0 90%, 0 100%, 100% 100%);
+	}
+
+	.skewed-image-container {
+		clip-path: polygon(0 0%, 100% 10%, 100% 100%, 0 90%);
+		aspect-ratio: 16 / 9;
+		margin: 0;
+
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+		}
+
+		&.parallax {
+			@media (min-width: 999px) {
+				overflow: hidden;
+
+				img {
+					will-change: transform;
+					width: 110%;
+					height: 110%;
+					object-fit: cover;
+					transform: translate(-5%, -5%);
+				}
+			}
+		}
+	}
+}

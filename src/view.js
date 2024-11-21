@@ -20,22 +20,18 @@
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/#view-script
  */
 
-document.addEventListener('DOMContentLoaded', () => {
+const initParallax = () => {
+	const hasParallaxImages = document.querySelectorAll('.skewed-image-container.parallax').length > 0;
+	if (!hasParallaxImages) {
+		return;
+	}
+
 	const parallaxImages = document.querySelectorAll('.skewed-image-container.parallax img');
-	const BREAKPOINT = 999;
-	const PARALLAX_SPEED = 0.1;
+	const PARALLAX_SPEED = 0.2;
 
 	let ticking = false;
-	let parallaxEnabled = window.innerWidth >= BREAKPOINT;
 
 	const updateParallax = () => {
-		if (!parallaxEnabled) {
-			parallaxImages.forEach(img => {
-				img.style.transform = 'translate(-5%, -5%)';
-			});
-			return;
-		}
-
 		parallaxImages.forEach(img => {
 			const container = img.closest('.skewed-image-container');
 			const rect = container.getBoundingClientRect();
@@ -44,21 +40,17 @@ document.addEventListener('DOMContentLoaded', () => {
 			const elementMiddle = rect.top + (rect.height / 2);
 			const distanceFromCenter = (elementMiddle - viewportMiddle) * PARALLAX_SPEED;
 
-			img.style.transform = `translate(-5%, calc(-5% - ${distanceFromCenter}px))`;
+			img.style.transform = `translate(50%, calc(-50% - ${distanceFromCenter}px))`;
 		});
 		ticking = false;
 	};
 
 	const handleResize = () => {
-		const shouldBeEnabled = window.innerWidth >= BREAKPOINT;
-		if (shouldBeEnabled !== parallaxEnabled) {
-			parallaxEnabled = shouldBeEnabled;
-			updateParallax();
-		}
+		updateParallax();
 	};
 
 	window.addEventListener('scroll', () => {
-		if (!ticking && parallaxEnabled) {
+		if (!ticking) {
 			window.requestAnimationFrame(updateParallax);
 			ticking = true;
 		}
@@ -67,4 +59,13 @@ document.addEventListener('DOMContentLoaded', () => {
 	window.addEventListener('resize', handleResize, { passive: true });
 
 	updateParallax();
-});
+};
+
+// Check if we're in the WordPress admin area
+if (window?.wp?.blocks) {
+	wp.domReady(() => {
+		initParallax();
+	});
+} else {
+	document.addEventListener('DOMContentLoaded', initParallax);
+}

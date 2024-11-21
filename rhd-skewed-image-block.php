@@ -51,6 +51,14 @@ function rhd_skewed_image_block_assets() {
 		'skewed-image-block-style',
 		plugins_url( 'build/style-index.css', __FILE__ )
 	);
+
+	wp_enqueue_script(
+		'skewed-image-block-view-script',
+		plugins_url( 'build/view.js', __FILE__ ),
+		[],
+		null,
+		true
+	);
 }
 add_action( 'enqueue_block_assets', 'rhd_skewed_image_block_assets' );
 

@@ -42,16 +42,17 @@
 		}
 
 		&.parallax {
-			@media (min-width: 999px) {
-				overflow: hidden;
+			position: relative;
 
-				img {
-					will-change: transform;
-					width: 110%;
-					height: 110%;
-					object-fit: cover;
-					transform: translate(-5%, -5%);
-				}
+			img {
+				will-change: transform;
+				object-fit: cover;
+				width: auto;
+				height: 150%;
+				transform: translate(50%, -50%);
+				position: absolute;
+				top: 50%;
+				left: -50%;
 			}
 		}
 	}

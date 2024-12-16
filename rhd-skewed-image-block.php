@@ -30,23 +30,13 @@ function rhd_create_block_rhd_skewed_image_block_block_init() {
 add_action( 'init', 'rhd_create_block_rhd_skewed_image_block_block_init' );
 
 /**
- * Enqueues the block assets for both editor and front-end.
- *
- * This function is responsible for loading the necessary CSS files
- * for the Slanted Image Block. It ensures that the styles are applied
- * consistently in both the editor and the front-end of the website.
+ * Enqueues the block assets for the front-end.
  *
  * @since 0.1.0
  *
  * @return void
  */
 function rhd_skewed_image_block_assets() {
-	wp_enqueue_style(
-		'skewed-image-block-editor-style',
-		plugins_url( 'build/style-index.css', __FILE__ ),
-		['wp-edit-blocks']
-	);
-
 	wp_enqueue_style(
 		'skewed-image-block-style',
 		plugins_url( 'build/style-index.css', __FILE__ )
@@ -61,6 +51,22 @@ function rhd_skewed_image_block_assets() {
 	);
 }
 add_action( 'enqueue_block_assets', 'rhd_skewed_image_block_assets' );
+
+/**
+ * Enqueues the block assets for the editor.
+ *
+ * @since 0.1.0
+ *
+ * @return void
+ */
+function rhd_skewed_image_block_editor_assets() {
+	wp_enqueue_style(
+		'skewed-image-block-editor-style',
+		plugins_url( 'build/style-index.css', __FILE__ ),
+		['wp-edit-blocks']
+	);
+}
+add_action( 'enqueue_block_editor_assets', 'rhd_skewed_image_block_editor_assets' );
 
 /**
  * Disable inline styling.

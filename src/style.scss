@@ -3,10 +3,13 @@
 	width: 100vw;
 	margin-left: calc(50% - 50vw);
 	margin-right: calc(50% - 50vw);
+	// Defaults match the block.json/editor default `angle: -10`
+	--safd-skew-top: 10%;
+	--safd-skew-bottom: 90%;
 
 	&.alignfull {
-		margin-block-start: 0;
-		margin-block-end: 0;
+		margin-top: 6vh;
+		margin-bottom: 6vh;
 	}
 
 	// Create two pseudo-elements for top and bottom text wrapping
@@ -21,18 +24,30 @@
 
 	&::before {
 		float: left;
-		shape-outside: polygon(0 0%, 100% 10%, 100% 0%, 0 0%);
+		shape-outside: polygon(0 0%, 100% var(--safd-skew-top), 100% 0%, 0 0%);
 	}
 
 	&::after {
 		float: right;
-		shape-outside: polygon(100% 100%, 0 90%, 0 100%, 100% 100%);
+		shape-outside: polygon(100% 100%, 0 var(--safd-skew-bottom), 0 100%, 100% 100%);
 	}
 
 	.skewed-image-container {
-		clip-path: polygon(0 0%, 100% 10%, 100% 100%, 0 90%);
+		clip-path: polygon(0 0%, 100% var(--safd-skew-top), 100% 100%, 0 var(--safd-skew-bottom));
 		aspect-ratio: 16 / 9;
 		margin: 0;
+
+		&.angle-positive {
+			// Positive angles intentionally store vars as:
+			// top: negative, bottom: >100.
+			// Convert those to in-bounds points so the opposite slant is visible.
+			clip-path: polygon(
+				0 calc(0% - var(--safd-skew-top)),
+				100% 0%,
+				100% calc(200% - var(--safd-skew-bottom)),
+				0 100%
+			);
+		}
 
 		img {
 			width: 100%;
